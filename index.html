@@ -72,7 +72,7 @@
   h1{font-size:30px;line-height:1.1;margin:4px 0 4px;font-weight:800;letter-spacing:-.02em}
   .sub{color:var(--muted);font-size:14.5px;margin:0 0 18px;line-height:1.4}
 
-  .switch{display:grid;grid-template-columns:repeat(3,1fr);border-radius:14px;padding:4px;margin-bottom:16px;gap:3px}
+  .switch{display:grid;grid-template-columns:repeat(2,1fr);border-radius:14px;padding:4px;margin-bottom:16px;gap:3px}
   .switch button{padding:9px 0 8px;border-radius:11px;font-weight:700;font-size:16px;color:var(--muted);line-height:1.15;position:relative;transition:background .2s,color .2s}
   .switch button small{display:block;font-size:11px;font-weight:600;margin-top:2px}
   .switch button.on{background:var(--glass2);color:var(--text)}
@@ -115,6 +115,20 @@
   .easy{margin-top:12px;font-size:13px;font-weight:600;color:var(--text2);padding:8px 10px;border-radius:10px;background:var(--glass2);display:inline-flex;gap:6px;align-items:center}
   .easy.on{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
 
+  .hero{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--glass);border:1px solid var(--stroke);box-shadow:var(--shadow);border-radius:22px;padding:16px 18px;margin-bottom:10px}
+  .hero-k{font-size:12px;font-weight:700;color:var(--accent-text);letter-spacing:.08em;text-transform:uppercase}
+  .hero-t{font-size:19px;font-weight:800;margin-top:3px;letter-spacing:-.01em}
+  .hero-s{font-size:13px;color:var(--muted);margin-top:3px}
+  .ring{width:64px;height:64px;flex:none;transform:rotate(-90deg)}
+  .ring circle{fill:none;stroke-width:6}
+  .ring-bg{stroke:var(--glass2)}
+  .ring-fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .4s ease}
+  .ring text{transform:rotate(90deg);transform-origin:32px 32px;font-size:14px;font-weight:800;fill:var(--text);font-family:inherit}
+  .tipcard{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:var(--accent-soft);color:var(--text2);font-size:13.5px;line-height:1.45;margin-bottom:12px}
+  .tip-ic{flex:none}
+  .ex-num{display:inline-flex;align-items:center;gap:6px}
+  .ex-plan{display:inline-block;margin-top:4px;background:var(--accent-soft);padding:3px 9px;border-radius:999px;font-size:13px}
+  .ex-name{font-size:17.5px}
   .finish{width:100%;padding:17px;border-radius:16px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:16px;margin-top:8px}
   .grp{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 10px;font-weight:800;font-size:15px}
   .grp button{font-size:12px;color:var(--muted);font-weight:700;background:var(--glass);border:1px solid var(--stroke);padding:6px 11px;border-radius:999px}
@@ -135,7 +149,9 @@
   nav .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
   nav button{padding:12px 0 14px;font-size:12px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px}
   nav button.on{color:var(--accent-text)}
-  nav svg{width:22px;height:22px}
+  nav button.on svg{background:var(--accent-soft);border-radius:999px;padding:3px 14px;width:52px;height:30px;box-sizing:border-box}
+  nav svg{transition:background .2s}
+  nav svg{width:24px;height:30px;padding:3px 0;box-sizing:border-box}
 
   .view{display:none}.view.on{display:block;animation:fade .25s ease}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -239,14 +255,25 @@
     <p class="sub" id="subtitle"></p>
 
     <div class="switch" id="switch"></div>
-    <div class="solobar" id="soloBar" style="display:none"><span>Это доп-тренировка, в очередь А → Б → В она не входит</span><button id="backMain">← К основной</button></div>
+
+    <div class="hero">
+      <div class="hero-txt">
+        <div class="hero-k">Сегодня</div>
+        <div class="hero-t" id="heroT"></div>
+        <div class="hero-s" id="heroS"></div>
+      </div>
+      <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" class="ring-bg"/><circle cx="32" cy="32" r="27" class="ring-fg" id="ringFg"/><text x="32" y="37" text-anchor="middle" id="ringTxt">0%</text></svg>
+    </div>
+
+    <div class="tipcard"><span class="tip-ic">💬</span><span id="tipTxt"></span></div>
+    <div class="solobar" id="soloBar" style="display:none"><span>Это доп-тренировка, очередь А → Б она не сбивает</span><button id="backMain">← К основной</button></div>
 
     <div class="info-card" id="warmCard">
       <div class="ic">🔥</div>
-      <div><b id="warmT">Разминка 10 минут</b><span id="warmD">Дорожка или велик, потом покрути суставами. Первый подход каждого упражнения делай с лёгким весом.</span></div>
+      <div><b id="warmT">Разминка 7 минут</b><span id="warmD">Дорожка или велик, потом покрути суставами. Первый подход каждого упражнения делай с лёгким весом.</span></div>
     </div>
 
-    <div class="progress"><div id="bar"></div></div>
+    <div class="progress" style="display:none"><div id="bar"></div></div>
     <div id="list"></div>
 
     <div class="info-card">
@@ -310,10 +337,10 @@
 
     <div class="rule"><h3>📅 Как устроена программа</h3>
       <ul>
-        <li><b>А — Ноги и пресс</b>, <b>Б — Грудь, плечи, трицепс</b>, <b>В — Спина и бицепс</b>.</li>
-        <li>Ходишь по кругу: А → Б → В → А… Приложение само показывает, какая следующая (зелёная точка).</li>
-        <li>Лучше всего 3 раза в неделю, тогда каждая мышца работает раз в неделю.</li>
-        <li>Между тренировками минимум один день отдыха.</li>
+        <li><b>Две тренировки на всё тело: А и Б.</b> Ходишь по очереди: А → Б → А → Б…</li>
+        <li>В каждой: ноги, грудь или плечи, спина и <b>блок на руки</b> из 3 упражнений. Руки работают каждый раз, поэтому растут быстрее.</li>
+        <li>Ходишь 2 или 3 раза в неделю, как получится. Между тренировками минимум один день отдыха.</li>
+        <li>Тренировка ~75 минут вместе с разминкой.</li>
       </ul></div>
 
     <div class="rule"><h3>🔢 Что значит «3 × 10–12»</h3>
@@ -409,7 +436,7 @@
   <h3>Как пользоваться</h3>
   <p>Всё просто, займёт минуту.</p>
   <ol class="steps">
-    <li><span><b>Выбери тренировку.</b> Сверху три кнопки: А, Б, В. Зелёная точка — та, что сегодня по очереди.</span></li>
+    <li><span><b>Выбери тренировку.</b> Сверху две кнопки: А и Б. Зелёная точка — та, что сегодня по очереди.</span></li>
     <li><span><b>Посмотри, как делать.</b> У каждого упражнения есть кнопка «▶ Как». Там анимация и ссылка на видео.</span></li>
     <li><span><b>Впиши вес.</b> Кнопками − и + или вручную. Под упражнением подсказка 🎯, с какого веса начать. В следующий раз приложение покажет, сколько было.</span></li>
     <li><span><b>Сделал подход — нажми кружок.</b> Кружки 1, 2, 3 — это подходы. После нажатия запускается таймер отдыха.</span></li>
@@ -425,59 +452,54 @@
 <script>
 /* ================= ПРОГРАММА ================= */
 const WORKOUTS = {
-  A: {name:"Ноги и пресс", short:"Ноги",
-      cool:"Растяжка бёдер спереди и сзади, ягодиц и икр — по 20–30 секунд на каждую ногу."},
-  B: {name:"Грудь, плечи, трицепс", short:"Жимы",
-      cool:"Растяжка груди в дверном проёме, плеч и трицепса — по 20–30 секунд."},
-  C: {name:"Спина и бицепс", short:"Тяги",
-      cool:"Повиси на турнике 20–30 секунд, потом растяни спину и бицепс."}
+  A: {name:"Всё тело + руки", short:"День 1",
+      cool:"Растяни бёдра, грудь и бицепс: по 20–30 секунд. Потом повиси на турнике 20 секунд."},
+  B: {name:"Всё тело + руки", short:"День 2",
+      cool:"Растяни ноги, плечи и трицепс: по 20–30 секунд на каждую сторону."},
+  C: {name:"Спина и бицепс (старая программа)", short:"Тяги", cool:""}
 };
-const ORDER = ["A","B","C"], RU = {A:"А",B:"Б",C:"В"};
+const ORDER = ["A","B"], RU = {A:"А",B:"Б",C:"В"};
 
 const PLAN = {
   A: [
-    {id:"squat", name:"Гоблет-присед", plan:"3 × 10–12", sets:3, kg:true, work:"Ноги и ягодицы",
-     tip:"Держи гантель у груди, спина прямая. Колени смотрят туда же, куда носки. Опускайся, пока бёдра не станут параллельны полу, и вставай через пятки."},
-    {id:"legpress", name:"Жим ногами в тренажёре", plan:"3 × 12", sets:3, kg:true, work:"Ноги и ягодицы",
+    {id:"legpress", name:"Жим ногами в тренажёре", plan:"3 × 10–12", sets:3, kg:true, work:"Ноги и ягодицы",
      tip:"Поясница прижата к спинке. Ноги на платформе на ширине плеч. Опускай платформу плавно, а вверху не выпрямляй колени до конца."},
-    {id:"rdl", name:"Румынская тяга с гантелями", plan:"3 × 10–12", sets:3, kg:true, work:"Задняя поверхность бедра, ягодицы, спина",
+    {id:"dbpress", name:"Жим гантелей лёжа", plan:"3 × 8–12", sets:3, kg:true, work:"Грудь, плечи, трицепс",
+     tip:"Сведи лопатки и прижми их к скамье. Опускай гантели до уровня груди, локти под углом около 45° к телу, потом выжимай вверх."},
+    {id:"latpull", name:"Тяга верхнего блока к груди", plan:"3 × 10–12", sets:3, kg:true, work:"Спина и бицепс",
+     tip:"Зафиксируй ноги под валиком. Тяни рукоять к верху груди локтями вниз, грудь вперёд. Корпусом не раскачивайся."},
+    {id:"rdl", name:"Румынская тяга с гантелями", plan:"3 × 10", sets:3, kg:true, work:"Задняя поверхность бедра, ягодицы",
      tip:"Колени чуть согнуты. Отводи таз назад, будто закрываешь дверь попой. Спина прямая, гантели скользят вдоль ног до середины голени."},
-    {id:"lunge", name:"Выпады с гантелями", plan:"2 × 10 на ногу", sets:2, kg:true, work:"Ноги и ягодицы",
-     tip:"Шаг широкий. Опускайся вниз, пока заднее колено почти не коснётся пола. Корпус ровный, переднее колено не уходит за носок."},
-    {id:"calf", name:"Подъёмы на носки стоя", plan:"3 × 15", sets:3, kg:true, work:"Икры",
-     tip:"Поднимайся на носки как можно выше, вверху задержись на секунду и медленно опускайся. Можно держать гантели в руках."},
-    {id:"legraise", name:"Подъёмы ног лёжа", plan:"3 × 12–15", sets:3, kg:false, work:"Пресс",
-     tip:"Лёжа на спине, поясница прижата к полу. Поднимай прямые ноги вверх и медленно опускай, не бросая их."}
+    {id:"curl", name:"Сгибания на бицепс с гантелями", plan:"3 × 10–12", sets:3, kg:true, work:"💪 Бицепс",
+     tip:"Локти прижаты к бокам. Поднимай гантели к плечам, вверху сожми бицепс на секунду, медленно опускай. Корпусом не помогай."},
+    {id:"triceps", name:"Разгибания на трицепс на блоке", plan:"3 × 12", sets:3, kg:true, work:"💪 Трицепс",
+     tip:"Локти прижаты к бокам и не двигаются. Работает только предплечье: разгибай руки вниз до конца, потом плавно вверх."},
+    {id:"hammer", anim:"curl", name:"Сгибания «молоток»", plan:"2 × 12", sets:2, kg:true, work:"💪 Бицепс и предплечья",
+     tip:"Держи гантели ладонями друг к другу, как молоток. Локти прижаты, поднимай к плечам. Делает руку толще."},
+    {id:"kneeraise", name:"Подъём коленей на брусьях", plan:"3 × 10–15", sets:3, kg:false, work:"Пресс",
+     tip:"Тренажёр со спинкой и подлокотниками («капитанский стул»). Упрись предплечьями, спина прижата. Поднимай колени к груди и медленно опускай, ноги не раскачивай."}
   ],
   B: [
-    {id:"dbpress", name:"Жим гантелей лёжа", plan:"3 × 10–12", sets:3, kg:true, work:"Грудь, плечи, трицепс",
-     tip:"Сведи лопатки и прижми их к скамье. Опускай гантели до уровня груди, локти под углом около 45° к телу, потом выжимай вверх."},
-    {id:"ohp", name:"Жим гантелей сидя вверх", plan:"3 × 10–12", sets:3, kg:true, work:"Плечи и трицепс",
-     tip:"Спина прижата к спинке скамьи, в пояснице не прогибайся. Гантели начинают у ушей, выжимай их над головой."},
-    {id:"chestpress", name:"Жим в тренажёре от груди", plan:"2 × 12", sets:2, kg:true, work:"Грудь и трицепс",
-     tip:"Настрой сиденье так, чтобы ручки были на уровне середины груди. Спина прижата, выжимай ручки вперёд и плавно возвращай."},
-    {id:"lateral", name:"Махи гантелями в стороны", plan:"3 × 12–15", sets:3, kg:true, work:"Плечи (средняя дельта)",
-     tip:"Бери лёгкий вес. Поднимай руки через стороны до уровня плеч, локти чуть согнуты, без рывков и раскачки."},
-    {id:"triceps", name:"Разгибания на трицепс на блоке", plan:"3 × 12", sets:3, kg:true, work:"Трицепс",
-     tip:"Локти прижаты к бокам и не двигаются. Работает только предплечье: разгибай руки вниз до конца, потом плавно вверх."},
-    {id:"pushup", name:"Отжимания", plan:"2 × максимум", sets:2, kg:false, work:"Грудь и трицепс",
-     tip:"Тело — ровная линия от головы до пяток. Опускайся, пока грудь почти не коснётся пола. Если тяжело, можно с колен."}
-  ],
-  C: [
-    {id:"latpull", name:"Тяга верхнего блока к груди", plan:"3 × 10–12", sets:3, kg:true, work:"Широчайшие мышцы спины, бицепс",
-     tip:"Зафиксируй ноги под валиком. Тяни рукоять к верху груди локтями вниз, грудь вперёд. Корпусом не раскачивайся."},
-    {id:"row", name:"Горизонтальная тяга блока", plan:"3 × 10–12", sets:3, kg:true, work:"Середина спины, бицепс",
+    {id:"squat", name:"Гоблет-присед", plan:"3 × 10–12", sets:3, kg:true, work:"Ноги и ягодицы",
+     tip:"Держи гантель у груди, спина прямая. Колени смотрят туда же, куда носки. Опускайся, пока бёдра не станут параллельны полу, и вставай через пятки."},
+    {id:"row", name:"Горизонтальная тяга блока", plan:"3 × 10–12", sets:3, kg:true, work:"Спина и бицепс",
      tip:"Ноги на упоре, колени чуть согнуты, спина прямая. Тяни рукоять к животу и в конце сведи лопатки."},
-    {id:"dbrow", name:"Тяга гантели в наклоне", plan:"3 × 10 на руку", sets:3, kg:true, work:"Спина, бицепс",
-     tip:"Колено и рука упираются в скамью, спина ровная, как стол. Тяни гантель к поясу локтем вверх-назад."},
-    {id:"hyper", name:"Гиперэкстензия", plan:"2 × 12–15", sets:2, kg:false, work:"Поясница и ягодицы",
-     tip:"Валик под тазом, ноги зафиксированы. Опускайся плавно и поднимайся до прямой линии тела, не выше. Без рывков."},
-    {id:"curl", name:"Сгибания на бицепс", plan:"3 × 12", sets:3, kg:true, work:"Бицепс",
-     tip:"Локти прижаты к бокам. Поднимай гантели к плечам и медленно опускай. Корпусом не помогай."},
-    {id:"crunch", name:"Скручивания", plan:"3 × 15", sets:3, kg:false, work:"Пресс",
-     tip:"Лёжа на спине, ноги согнуты. Поднимай плечи от пола за счёт пресса, поясница прижата. Шею руками не тяни."}
+    {id:"ohp", name:"Жим гантелей сидя вверх", plan:"3 × 10", sets:3, kg:true, work:"Плечи и трицепс",
+     tip:"Спина прижата к спинке скамьи, в пояснице не прогибайся. Гантели начинают у ушей, выжимай их над головой."},
+    {id:"lunge", name:"Выпады с гантелями", plan:"2 × 10 на ногу", sets:2, kg:true, work:"Ноги и ягодицы",
+     tip:"Шаг широкий. Опускайся, пока заднее колено почти не коснётся пола. Корпус ровный, переднее колено не уходит за носок."},
+    {id:"cablecurl", anim:"curl", name:"Сгибания на нижнем блоке", plan:"3 × 12", sets:3, kg:true, work:"💪 Бицепс",
+     tip:"Встань лицом к блоку, локти прижаты к бокам. Поднимай рукоять к груди и плавно опускай. Блок держит мышцу в напряжении всё движение."},
+    {id:"french", name:"Разгибание гантели из-за головы", plan:"3 × 10–12", sets:3, kg:true, work:"💪 Трицепс (длинная головка — самая большая)",
+     tip:"Сидя, держи одну гантель двумя руками над головой. Локти смотрят вверх и не разъезжаются. Опускай гантель за голову и разгибай."},
+    {id:"lateral", name:"Махи гантелями в стороны", plan:"2 × 12–15", sets:2, kg:true, work:"Плечи (делают плечи шире)",
+     tip:"Бери лёгкий вес. Поднимай руки через стороны до уровня плеч, локти чуть согнуты, без рывков и раскачки."},
+    {id:"cablecrunch", name:"Скручивания на верхнем блоке", plan:"3 × 12–15", sets:3, kg:true, work:"Пресс",
+     tip:"Встань на колени лицом к верхнему блоку, канат держи у головы. Скручивайся вниз за счёт пресса, будто тянешь локти к коленям. Таз не двигается."}
   ]
 };
+/* названия упражнений из старой программы — чтобы история показывалась правильно */
+const LEGACY_NAMES = {calf:"Подъёмы на носки стоя", chestpress:"Жим в тренажёре от груди", pushup:"Отжимания", dbrow:"Тяга гантели в наклоне", hyper:"Гиперэкстензия"};
 
 /* стартовые веса для новичка и замены, если тренажёр занят */
 const EXTRA = {
@@ -520,9 +542,21 @@ const EXTRA = {
   crunch:{alt:{id:"plank", name:"Планка", plan:"3 × 30–45 сек", work:"Пресс", kg:false,
     tip:"Тело — ровная линия от головы до пяток. Пресс и ягодицы напряжены, таз не провисает."}}
 };
+Object.assign(EXTRA, {
+  kneeraise:{alt:{id:"hangknee", name:"Подъём коленей в висе на турнике", work:"Пресс", kg:false,
+    tip:"Повисни на турнике, руки на ширине плеч. Поднимай колени к груди и медленно опускай, не раскачиваясь."}},
+  cablecrunch:{start:"15–25 кг", alt:{id:"kneeraise2", anim:"kneeraise", name:"Подъём коленей на брусьях", work:"Пресс", kg:false,
+    tip:"Упрись предплечьями в подлокотники, спина прижата. Поднимай колени к груди и медленно опускай."}},
+  hammer:{start:"3–5 кг каждая", alt:{id:"ropehammer", anim:"curl", name:"«Молоток» на блоке с канатом", work:"Бицепс и предплечья", kg:true, start:"5–10 кг",
+    tip:"Возьми канат на нижнем блоке ладонями друг к другу. Локти прижаты, тяни концы каната к плечам."}},
+  cablecurl:{start:"5–10 кг", alt:{id:"curl2", anim:"curl", name:"Сгибания с гантелями сидя", work:"Бицепс", kg:true, start:"3–5 кг каждая",
+    tip:"Сидя на скамье, спина прямая. Поднимай гантели к плечам, разворачивая ладони вверх. Корпусом не раскачивайся."}},
+  french:{start:"4–6 кг", alt:{id:"rope", anim:"triceps", name:"Разгибания с канатом на блоке", work:"Трицепс", kg:true, start:"5–10 кг",
+    tip:"Локти прижаты к бокам. Разгибай руки вниз, внизу разводи концы каната в стороны."}}
+});
 Object.values(PLAN).flat().forEach(ex => {
   const e = EXTRA[ex.id] || {};
-  ex.start = e.start; ex.anim = ex.id;
+  ex.start = e.start; ex.anim = ex.anim || ex.id;
   if (e.alt) ex.alt = Object.assign({plan: ex.plan, sets: ex.sets, anim: null}, e.alt);
 });
 /* ================= ДОП-ТРЕНИРОВКИ ================= */
@@ -534,11 +568,11 @@ const ADDONS = {
      tip:"Поясница прижата к полу. Поднимай прямые ноги вверх и медленно опускай, не бросая."},
     {id:"x_plank", name:"Планка", plan:"2 × 40 сек", sets:2, kg:false, work:"Пресс, корпус",
      tip:"Упор на локти и носки. Тело — ровная линия, пресс и ягодицы напряжены, таз не провисает."}]},
-  arms:{name:"Руки+", time:"~10 мин", desc:"Дополнительно бицепс и трицепс.", items:[
-    {id:"x_hammer", anim:"curl", name:"Сгибания «молоток»", plan:"2 × 12", sets:2, kg:true, start:"3–5 кг каждая", work:"Бицепс, предплечья",
-     tip:"Держи гантели ладонями друг к другу, как молоток. Локти прижаты, поднимай гантели к плечам."},
-    {id:"x_rope", anim:"triceps", name:"Разгибания с канатом на блоке", plan:"2 × 12", sets:2, kg:true, start:"5–10 кг", work:"Трицепс",
-     tip:"Локти прижаты к бокам. Разгибай руки вниз, внизу разводи концы каната в стороны."}]},
+  arms:{name:"Руки+", time:"~10 мин", desc:"Ещё больше рук: бицепс и трицепс под другим углом.", items:[
+    {id:"x_conc", anim:"curl", name:"Концентрированные сгибания", plan:"2 × 10 на руку", sets:2, kg:true, start:"4–6 кг", work:"Бицепс",
+     tip:"Сидя, локоть упирается во внутреннюю часть бедра. Поднимай гантель к плечу медленно, вверху сожми бицепс."},
+    {id:"x_closepush", anim:"pushup", name:"Отжимания узким хватом", plan:"2 × максимум", sets:2, kg:false, work:"Трицепс",
+     tip:"Ладони под грудью, локти прижаты к корпусу. Тяжело — делай с колен."}]},
   posture:{name:"Осанка", time:"~10 мин", desc:"Задняя часть плеч и верх спины. Полезно, если много сидишь за компьютером.", items:[
     {id:"x_facepull", name:"Тяга каната к лицу", plan:"2 × 15", sets:2, kg:true, start:"5–10 кг", work:"Задние дельты, верх спины",
      tip:"Блок на уровне лица. Тяни канат к лицу, разводя руки в стороны, локти высоко. В конце сведи лопатки."},
@@ -650,6 +684,14 @@ const ANIM = {
   curl:{p0:{F:[100,140],T:[112,140],K:[101,110],P:[99,80],S:[100,38],H:[102,26],E:[100,60],W:[101,82]},
         p1:{W:[116,46]},
         segs:[["F","T"],["F","K"],["K","P"],["P","S"],["S","E"],["E","W","a"]],db:["W"]},
+  kneeraise:{st:{BK1:[90,20],BK2:[90,140],AP1:[96,63],AP2:[132,63],AP3:[132,63],AP4:[90,63]},
+          p0:{H:[101,22],S:[100,36],P:[100,80],K:[102,110],F:[104,136],E:[100,60],W:[124,60]},
+          p1:{K:[128,72],F:[130,102]},
+          segs:[["BK1","BK2","p"],["AP1","AP2","p"],["S","P","a"],["P","K"],["K","F"],["S","E"],["E","W"]]},
+  cablecrunch:{st:{PU:[150,6],FR1:[158,2],FR2:[158,140]},
+          p0:{T:[56,140],F:[62,140],K:[86,140],P:[86,108],S:[94,70],H:[98,58],E:[106,74],W:[100,62]},
+          p1:{S:[122,100],H:[132,108],E:[124,116],W:[130,104]},
+          segs:[["FR1","FR2","p"],["PU","W","c"],["T","K"],["K","P"],["P","S","a"],["S","E"],["E","W"]]},
   crunch:{p0:{H:[34,126],S:[48,131],P:[90,134],K:[112,110],F:[132,136],E:[62,124],W:[54,126]},
           p1:{S:[58,114],H:[50,103],E:[70,114],W:[62,112]},
           segs:[["P","K"],["K","F"],["P","S","a"],["S","E"],["E","W"]]}
@@ -761,6 +803,21 @@ async function save(){
 }
 const saveDraft = () => lsSet(LS_DRAFT, draft);
 
+/* ================= СОВЕТ ДНЯ ================= */
+const TIPS = [
+  "Наушники и любимый плейлист — и ты в своём мире. Остальным в зале правда не до тебя.",
+  "Все крупные ребята в зале когда-то пришли худыми. Сравнивай себя только с собой месяц назад.",
+  "Знаешь свою программу — выглядишь увереннее всех, кто бродит без плана.",
+  "Последние 2–3 повтора должны быть тяжёлыми. Если легко — бери вес больше.",
+  "Руки растут от прогресса в весе. Записывай вес, и через месяц сам увидишь разницу.",
+  "Мышцы растут во время отдыха и сна. 8–9 часов сна — это тоже тренировка.",
+  "Белок в каждый приём пищи: курица, мясо, яйца, творог, рыба.",
+  "Не знаешь, как настроить тренажёр, — спроси тренера. Новичков спрашивают постоянно, это нормально.",
+  "Медленно опускай вес: на опускании мышца работает не меньше, чем на подъёме.",
+  "Пропустил тренировку — не страшно. Просто сделай следующую по очереди."
+];
+(() => { const d = new Date(); const n = Math.floor(d.getTime()/864e5); $("tipTxt").textContent = TIPS[n % TIPS.length]; })();
+
 /* ================= ТРЕНИРОВКА ================= */
 function renderSwitch(){
   const nw = nextW();
@@ -783,15 +840,15 @@ function renderTrain(){
   if (isMain(w)) {
     $("title").textContent = "Тренировка " + RU[w];
     const addMin = draft.addons.length * 10;
-    $("subtitle").textContent = WORKOUTS[w].name + " · ~" + (60 + addMin) + " минут" + (w === nextW() ? " · сегодня по очереди" : "");
+    $("subtitle").textContent = WORKOUTS[w].name + (w === nextW() ? " · сегодня по очереди" : "");
   } else {
     $("title").textContent = SOLO[w].name;
     $("subtitle").textContent = "Доп-тренировка · " + SOLO[w].time;
   }
   $("soloBar").style.display = isMain(w) ? "none" : "";
   $("warmCard").style.display = w === "S" ? "none" : "";
-  $("warmT").textContent = w === "H" ? "Разминка 5 минут" : "Разминка 10 минут";
-  $("warmD").textContent = w === "H" ? "Походи или попрыгай на месте, покрути руками, плечами, тазом и коленями." : "Дорожка или велик, потом покрути суставами. Первый подход каждого упражнения делай с лёгким весом.";
+  $("warmT").textContent = w === "H" ? "Разминка 5 минут" : "Разминка 7 минут";
+  $("warmD").textContent = w === "H" ? "Походи или попрыгай на месте, покрути руками, плечами, тазом и коленями." : "5 минут дорожка или велик, не больше: силы нужны для железа. Потом покрути суставами. Первый подход каждого упражнения — лёгкий.";
   $("poolCard").style.display = isMain(w) ? "" : "none";
   $("cooldown").textContent = WORKOUTS[w].cool;
   renderSwitch();
@@ -804,6 +861,12 @@ function renderTrain(){
     return head + card(slot, i);
   }).join("");
   $("bar").style.width = (total ? done/total*100 : 0) + "%";
+  const pct = total ? Math.round(done/total*100) : 0, C = 2*Math.PI*27;
+  $("ringFg").style.strokeDasharray = C; $("ringFg").style.strokeDashoffset = C*(1-pct/100);
+  $("ringTxt").textContent = pct + "%";
+  const mins = isMain(w) ? (75 + draft.addons.length*10) : parseInt(SOLO[w].time.replace(/\D/g,""))||30;
+  $("heroT").textContent = list.length + " упражнений · ~" + mins + " мин";
+  $("heroS").textContent = done ? `Сделано ${done} из ${total} подходов` : `${total} подходов · жми кружок после каждого`;
   renderExtra();
 
   function card(slot, i){
@@ -931,7 +994,7 @@ $("finish").addEventListener("click", () => {
 });
 
 /* ================= ИСТОРИЯ ================= */
-const NAMES = {}; ALL.forEach(e => NAMES[e.id] = e.name);
+const NAMES = Object.assign({}, LEGACY_NAMES); ALL.forEach(e => NAMES[e.id] = e.name);
 let armed = null;
 function renderHist(){
   const h = state.history;
